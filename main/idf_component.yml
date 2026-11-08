@@ -1,0 +1,6 @@
+dependencies:
+  idf: ">=5.5"
+  # USB HID host for a keyboard / mouse on the S3's USB port.
+  espressif/usb_host_hid: "^1.0.0"
+  # USB Mode's device stack. The raw component, not esp_tinyusb - see tusb_config.h.
+  espressif/tinyusb: "^0.21.0"
