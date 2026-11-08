@@ -9,6 +9,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "ide.h"
+#include "../include/host.h"
 
 #ifdef IDE_DIAG
 extern int ets_printf(const char *fmt, ...);
@@ -214,6 +215,7 @@ static void read_block(drive_t *dr)
 	uint32_t n = s.rem < s.blk ? s.rem : s.blk, i, lba;
 	int e;
 
+	host_hdd_access((UINT8)(dr == &s.drv[1]));
 	for (i = 0; i < n; i++) {
 		e = resolve(dr, &lba);
 		if (e) { fail(dr, (uint8_t)e); return; }
@@ -262,6 +264,7 @@ static void write_block(drive_t *dr)
 	uint32_t i, lba;
 	int e;
 
+	host_hdd_access((UINT8)(dr == &s.drv[1]));
 	for (i = 0; i < s.blkn; i++) {
 		e = resolve(dr, &lba);
 		if (e) { fail(dr, (uint8_t)e); return; }
