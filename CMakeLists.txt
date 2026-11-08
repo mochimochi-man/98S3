@@ -4,7 +4,7 @@ include($ENV{IDF_PATH}/tools/cmake/project.cmake)
 # Newer-compiler warnings in dependencies must not break the build.
 idf_build_set_property(COMPILE_OPTIONS "-Wno-error;-Wno-stringop-truncation;-Wno-stringop-overflow" APPEND)
 
-set(PROJECT_VER "1.1.9")
+set(PROJECT_VER "1.2.0")
 
 # CPU core: 1 = components/pc98core/cpu. Set here so every component sees the same value.
 if(NOT DEFINED PC98_NEWCPU)

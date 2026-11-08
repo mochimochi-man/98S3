@@ -1,6 +1,12 @@
 98S3
 
 
+1.2.0   2026-11-09
+
+  - Fixed the drive lamps.
+  - Added CD-ROM image support.
+
+
 1.1.9   2026-11-06
 
   - New release.

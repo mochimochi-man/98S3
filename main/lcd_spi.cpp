@@ -306,10 +306,12 @@ static void reduce(const uint16_t *src, int mode) {
 }
 
 // ---- drive lamps ---------------------------------------------------------------------------------------------------
-// FDD1, FDD2 and HDD as small bars in the margin under the picture: red for the floppies, green for the hard disk.
-// The core reports each access (host_fdd_access / host_hdd_access); a lamp stays lit for a moment after the last.
+// FDD1, FDD2, CD-ROM and HDD as small bars in the margin under the picture: red for the floppies, yellow for the
+// CD-ROM, green for the hard disk. The core reports each access (host_fdd_access / host_cd_access /
+// host_hdd_access); a lamp stays lit for a moment after the last.
 #define LAMP_HOLD_US 80000
-static volatile int64_t s_lamp_at[3];
+#define LAMPS 4
+static volatile int64_t s_lamp_at[LAMPS];   // FDD1, FDD2, CD-ROM, HDD
 static int  s_lamp_drawn = -1;
 static bool s_lamps_on = true;
 static volatile bool s_lamp_force = true;
@@ -317,9 +319,12 @@ static volatile bool s_lamp_force = true;
 extern "C" void lamp_fdd(REG8 drv) {
     if (drv < 2) s_lamp_at[drv] = esp_timer_get_time();
 }
+extern "C" void lamp_cd(void) {
+    s_lamp_at[2] = esp_timer_get_time();
+}
 extern "C" void lamp_hdd(REG8 drv) {
     (void)drv;
-    s_lamp_at[2] = esp_timer_get_time();
+    s_lamp_at[3] = esp_timer_get_time();
 }
 extern "C" void lcd_lamps_enable(bool on) { s_lamps_on = on; s_lamp_force = true; }
 extern "C" bool lcd_lamps_enabled(void) { return s_lamps_on; }
@@ -329,7 +334,7 @@ static void paint_lamps(void) {
     if (s_scale_mode == SCALE_1X) return;          // no margin to put them in
     const int64_t now = esp_timer_get_time();
     int on = 0;
-    for (int i = 0; i < 3; i++)
+    for (int i = 0; i < LAMPS; i++)
         if (s_lamp_at[i] && now - s_lamp_at[i] < LAMP_HOLD_US) on |= 1 << i;
     if (!s_lamps_on) on = -2;
     if (on == s_lamp_drawn && !s_lamp_force) return;
@@ -337,10 +342,10 @@ static void paint_lamps(void) {
     const int below = (s_pan_h + s_dst_h) / 2;
     if (below + 2 + lh > s_pan_h) return;
     const int right = (s_pan_w + s_dst_w) / 2;
-    const int x0 = right - (3 * lw + 2 * gap);
-    static const uint16_t lit[3] = { 0xF800, 0xF800, 0x07E0 };
-    static const uint16_t dark[3] = { 0x3000, 0x3000, 0x0180 };
-    for (int i = 0; i < 3; i++) {
+    const int x0 = right - (LAMPS * lw + (LAMPS - 1) * gap);
+    static const uint16_t lit[LAMPS] = { 0xF800, 0xF800, 0xFFE0, 0x07E0 };   // red, red, yellow, green
+    static const uint16_t dark[LAMPS] = { 0x3000, 0x3000, 0x3180, 0x0180 };
+    for (int i = 0; i < LAMPS; i++) {
         const uint16_t c = (on < 0) ? 0x0000 : (on & (1 << i)) ? lit[i] : dark[i];
         fill_rect(x0 + i * (lw + gap), below + 2, lw, lh, c);
     }

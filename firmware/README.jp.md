@@ -8,10 +8,10 @@
 
 ## 新規書き込み（結合版）
 
-`98S3-public-1.1.9-20261106.bin` を **0x0** に書き込みます。全体を書き込むため、設定が失われる場合があります。
+`98S3-public-1.2.0-20261109.bin` を **0x0** に書き込みます。全体を書き込むため、設定が失われる場合があります。
 
 ```sh
-python -m esptool --chip esp32s3 --port COM6 --baud 460800 write_flash 0x0 98S3-public-1.1.9-20261106.bin
+python -m esptool --chip esp32s3 --port COM6 --baud 460800 write_flash 0x0 98S3-public-1.2.0-20261109.bin
 ```
 
 ## 設定を維持する更新

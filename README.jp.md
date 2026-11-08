@@ -107,7 +107,7 @@ idf.py -p <PORT> flash
 新規に導入する場合は、ブートローダー・パーティションテーブル・アプリを含む結合イメージを書き込みます。
 
 ```sh
-python -m esptool --chip esp32s3 --port <PORT> --baud 460800 write_flash 0x0 firmware/98S3-public-1.1.9-20261106.bin
+python -m esptool --chip esp32s3 --port <PORT> --baud 460800 write_flash 0x0 firmware/98S3-public-1.2.0-20261109.bin
 ```
 
 同じパーティション構成から更新する場合は、アプリ単体を書き込みます。
