@@ -1,5 +1,9 @@
 # 98S3
 
+![98S3](cover.png)
+
+![98S3 menu](98S3_menu_1.png)
+
 A **PC-9801 emulator for the ESP32-S3**. It is a port of 98TAB5 (for the M5Stack Tab5) to the ESP32-S3; the
 emulator itself (the CPU and the devices) is shared with 98TAB5.
 

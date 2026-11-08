@@ -1,5 +1,9 @@
 # 98S3
 
+![98S3](cover.png)
+
+![98S3 menu](98S3_menu_1.png)
+
 **ESP32-S3 用 PC-9801 エミュレータ**です。M5Stack Tab5 用の 98TAB5 を ESP32-S3 に移植したもので、
 エミュレータ本体（CPU とデバイス）は 98TAB5 と共通です。
 
