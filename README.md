@@ -144,8 +144,7 @@ built-in compatible BIOS starts.
 Choose disk images for FDD1 / FDD2 / CD-ROM / HDD and leave the menu with **Reset**: the machine restarts with them
 mounted.
 
-CD-ROM takes a CD image (`.ISO` or `.CUE`). To use it from DOS, load `CD98.SYS` and
-`CDEX98.COM` (or MSCDEX) from `tools/cd98`.
+CD-ROM takes a CD image (`.ISO` or `.CUE`).
 
 If you have `BIOS.ROM` or `FONT.ROM` dumped from a real machine, put them in the root of the microSD card and
 choose them in the menu. They take precedence over the built-in ROMs.
